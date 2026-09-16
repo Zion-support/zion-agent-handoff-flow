@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zion Agent Handoff Designer</title>
+<meta name="description" content="Design multi-agent delegation flows visually: agents, handoff rules, escalation paths — export as config. Free tool by Zion Tech Group.">
+<style>
+:root{--bg:#0d0a14;--card:#181226;--acc:#e879f9;--txt:#f5ecfd;--mut:#b3a2cc}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt)}
+header{padding:48px 24px 24px;text-align:center;background:linear-gradient(160deg,#36124a,#0d0a14)}
+h1{margin:0 0 8px}.wrap{max-width:960px;margin:0 auto;padding:24px}
+.panel{background:var(--card);border:1px solid #2c2044;border-radius:14px;padding:20px;margin-bottom:20px}
+input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #3d2b5c;background:#130e1f;color:var(--txt)}
+label{display:block;font-size:.85rem;color:var(--mut);margin:12px 0 4px}
+button{margin-top:12px;padding:10px 18px;border:0;border-radius:10px;background:var(--acc);color:#26082f;font-weight:700;cursor:pointer}
+.agent{background:#140e24;border:1px solid #3d2b5c;border-radius:12px;padding:14px;margin:10px 0}
+.agent h4{margin:0 0 6px;color:var(--acc)}
+.flow{font-family:ui-monospace,monospace;font-size:.85rem;background:#110b1c;border-radius:10px;padding:14px;margin-top:8px;white-space:pre-wrap}
+pre{background:#110b1c;border:1px solid #2c2044;border-radius:12px;padding:14px;font-size:.82rem;overflow:auto}
+footer{padding:32px 24px;text-align:center;color:var(--mut);font-size:.85rem;border-top:1px solid #241a38;margin-top:40px}
+footer a{color:var(--acc);text-decoration:none;margin:0 8px}
+</style>
+</head>
+<body>
+<header><h1>🔀 Zion Agent Handoff Designer</h1>
+<p>Define agents, their tools and handoff rules. Visualize the flow and export a config skeleton for LangGraph/OpenAI Agents SDK.</p></header>
+<div class="wrap">
+<div class="panel">
+<label>Agent name</label><input id="name" placeholder="Triage">
+<label>Role / instructions</label><input id="role" placeholder="Classify inbound requests and route">
+<label>Handoffs to (comma-separated agent names)</label><input id="ho" placeholder="Billing, Technical, HumanEscalation">
+<button onclick="add()">Add agent</button>
+</div>
+<div class="panel"><h3 style="margin-top:0">Flow</h3><div id="list"></div><div class="flow" id="flow">Add agents to see the handoff map.</div></div>
+<div class="panel" id="result" style="display:none"><pre id="json"></pre><button onclick="dl()">Download config.json</button></div>
+</div>
+<footer>Part of the <a href="https://ziontechgroup.com">Zion Tech Group</a> AI apps network ·
+<a href="https://ziontechgroup.com/zion-agent-stack-builder/">Agent Stack Builder</a>
+<a href="https://ziontechgroup.com/zion-agent-contract-tests/">Contract Tester</a>
+<a href="https://ziontechgroup.com/autonomous-ai-agents/">Zion agent services</a></footer>
+<script>
+let A=[{name:'Triage',role:'Classify and route inbound requests',handoffs:['Specialist','HumanEscalation']},{name:'Specialist',role:'Resolve domain-specific requests with tools',handoffs:['HumanEscalation']},{name:'HumanEscalation',role:'Human agent takeover with full context summary',handoffs:[]}];
+function render(){
+document.getElementById('list').innerHTML=A.map((a,i)=>`<div class="agent"><h4>${a.name}</h4><div style="font-size:.9rem">${a.role}</div><div style="font-size:.8rem;color:var(--mut);margin-top:4px">→ ${a.handoffs.join(', ')||'(terminal)'}</div></div>`).join('');
+document.getElementById('flow').textContent=A.map(a=>a.name+'  →  '+(a.handoffs.join(' | ')||'∅')).join('\n');
+const cfg={agents:A.map(a=>({name:a.name,instructions:a.role,handoffs:a.handoffs,guardrails:a.name==='HumanEscalation'?['require_full_context_summary']:['no_destructive_actions_without_approval']}))};
+document.getElementById('json').textContent=JSON.stringify(cfg,null,2);document.getElementById('result').style.display='block';window._cfg=cfg;}
+function add(){const n=document.getElementById('name').value.trim();if(!n)return;
+A.push({name:n,role:document.getElementById('role').value||'(no role)',handoffs:document.getElementById('ho').value.split(',').map(s=>s.trim()).filter(Boolean)});
+['name','role','ho'].forEach(id=>document.getElementById(id).value='');render();}
+function dl(){const b=new Blob([JSON.stringify(window._cfg,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='agent-handoff-config.json';a.click();}
+render();
+</script>
+</body>
+</html>
