@@ -1,17 +1,10 @@
-# Zion Agent Handoff Flow — Zion App Network
+# Zion Agent Handoff Flow
 
-Agent Handoff Designer — design multi-agent delegation flows visually. Part of the [Zion Tech Group](https://ziontechgroup.com) app network.
+Handoff flow runtime for AI agents.
 
-- 🔗 Live app: [https://ziontechgroup.com/zion-agent-handoff-flow/](https://ziontechgroup.com/zion-agent-handoff-flow/)
-- 🏠 Category: [AI Agents & Orchestration](https://github.com/Zion-support/zion-network/blob/main/network/ai-agents-orchestration.md)
+## Network
+- 📚 Master catalog: [zion-app-network/CATALOG.md](https://github.com/Zion-support/zion-app-network/blob/main/CATALOG.md)
+- Hubs: [zion-app-network](https://github.com/Zion-support/zion-app-network) · [agents](https://github.com/Zion-support/agents)
+- Related: [zion-agent-handoff-designer](https://github.com/Zion-support/zion-agent-handoff-designer) · [ai-agent-swarm](https://github.com/Zion-support/ai-agent-swarm) · [zion-ai-agent-orchestrator](https://github.com/Zion-support/zion-ai-agent-orchestrator) · [zion-agent-observability](https://github.com/Zion-support/zion-agent-observability)
 
-## Related apps in the network
-
-- [Zion Agent Handoff Designer](https://github.com/Zion-support/zion-agent-handoff-designer) — design multi-agent delegation flows visually
-- [Zion Agent Contract Tester](https://github.com/Zion-support/zion-agent-contract-tester) — schema-contract tests for agent outputs
-- [Zion Agent Observability](https://github.com/Zion-support/zion-agent-observability) — tracing, evals-in-CI, cost alerts scorecard
-- [Zion Agent Stack Builder](https://github.com/Zion-support/zion-agent-stack-builder) — recommended MCP/agent tool stacks
-- [Zion AI Agent Orchestrator](https://github.com/Zion-support/zion-ai-agent-orchestrator) — multi-agent AI orchestration platform
-
-## Part of the Zion App Network
-🌐 [Network Index](https://github.com/Zion-support/zion-network/blob/main/APPS_NETWORK.md) · [Status](https://zion-support.github.io/zion-status/) · [Plans](https://zion-support.github.io/zion-plans/) · [Portal](https://zion-support.github.io/zion-portal/)
+*Zion Tech Group · [ziontechgroup.com](https://ziontechgroup.com)*
